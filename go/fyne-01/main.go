@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
@@ -21,26 +22,35 @@ func main() {
 	a := app.New()
 	w := a.NewWindow("demo")
 	w.Resize(fyne.NewSize(800, 500))
-	table := Table()
-	btn := widget.NewButton("Reset", func() {
+	table := CreateTable()
+	btn := widget.NewButton("Update", func() {
+		fmt.Println("update clicked")
+		data = [][]string{
+			{"r1", "r2"},
+			{"r3", "r4"},
+		}
+
+		table.Refresh()
+	})
+	btn2 := widget.NewButton("Reset", func() {
 		fmt.Println("reset clicked")
 		data = [][]string{}
 		table.Refresh()
 	})
-	btn2 := widget.NewButton("Recreate", func() {
+	btn3 := widget.NewButton("Recreate", func() {
 		fmt.Println("recreate clicked")
 		data = [][]string{}
-		t := Table()
-		content.Objects[2] = t
+		t := CreateTable()
+		content.Objects[3] = t
 		content.Refresh()
 	})
-	c := container.New(&layout.LocalLayout{}, btn, btn2, table)
+	c := container.New(&layout.LocalLayout{}, btn, btn2, btn3, table)
 	content = c
 	w.SetContent(c)
 	w.ShowAndRun()
 }
 
-func Table() *widget.Table {
+func CreateTable() *widget.Table {
 	table := widget.NewTable(
 		func() (int, int) {
 			return len(data), 2
@@ -52,5 +62,7 @@ func Table() *widget.Table {
 			l := o.(*widget.Label)
 			l.SetText(data[i.Row][i.Col])
 		})
+	table.SetColumnWidth(0, 200)
+	table.SetColumnWidth(1, 200)
 	return table
 }
