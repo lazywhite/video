@@ -16,12 +16,18 @@ impl Bark for Cat {
 }
 
 fn get_animal(num: i32) -> Box<dyn Bark> {
-    //fn get_animal(num: i32) -> impl Bark {
     if num % 2 == 0 {
         return Box::new(Dog);
     }
     return Box::new(Cat);
 }
+
+// fn wrong(num: i32) -> impl Bark {
+//     if num % 2 == 0 {
+//         return Dog;
+//     }
+//     return Cat;
+// }
 
 fn main() {
     let a = get_animal(1);
