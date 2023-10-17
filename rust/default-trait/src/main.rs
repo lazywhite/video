@@ -1,13 +1,12 @@
 #![allow(dead_code)]
 // method1: 让编译器自动实现
-// #[derive(Default)]
+//#[derive(Default)]
 struct User {
     name: String,
     age: i32,
 }
 
 // method2: 手动实现Default Trait
-/*
 impl Default for User {
     fn default() -> Self {
         User {
@@ -16,12 +15,11 @@ impl Default for User {
         }
     }
 }
-*/
 
 fn main() {
     let u1 = User {
         name: "bob".to_owned(),
-        //..User::default()
+        ..User::default()
     };
     println!("{}", u1.age);
 }
